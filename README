@@ -1,5 +1,10 @@
 Buddycloud-build
 ================
 
-buddycloud-build is a set of scripts for managing the build, packaging, and 
-archiving of buddycloud-related projects. 
+buddycloud-build is a set of scripts for managing the build, packaging, and archiving of buddycloud-related projects.
+
+Basic config is set in the file 'system.d/conf.d/config.sh' . There are other config files in the dirs under conf.d.
+
+For usage see the file 'doc/usage.txt'
+
+The main program file is 'system.d/bc-build.sh' . You should create a symlink to this in your $PATH.

@@ -1,0 +1,151 @@
+[andy@monkey system.d]$ bc-build list  # list projects and releases
+Called with parameters: list
+      Release    | Projects
+      -------------------------------------
+      stable     | web-client node-server 
+      dev        | web-client node-server python-server 
+      
+[andy@monkey system.d]$ bc-build status  # show status of all projects
+Called with parameters: status
+'web-client' in 'stable' is in state: NULL
+'node-server' in 'stable' is in state: NULL
+'web-client' in 'dev' is in state: NULL
+'node-server' in 'dev' is in state: NULL
+'python-server' in 'dev' is in state: NULL
+
+[andy@monkey system.d]$ bc-build status dev  # limit search to projects in 'dev' release.
+Called with parameters: status dev
+'web-client' in 'dev' is in state: NULL
+'node-server' in 'dev' is in state: NULL
+'python-server' in 'dev' is in state: NULL
+
+[andy@monkey system.d]$ bc-build status dev web-client # limit search to release and project.
+Called with parameters: status dev web-client
+'web-client' in 'dev' is in state: NULL
+
+[andy@monkey system.d]$ bc-build status all web-client # ditto to all releases of a project
+Called with parameters: status all web-client
+'web-client' in 'stable' is in state: NULL
+'web-client' in 'dev' is in state: NULL
+
+[andy@monkey system.d]$ bc-build init all web-client # initialise all releases of the web-client
+Called with parameters: init all web-client
+  Working on 'web-client' in 'stable'
+    Doing action 'init'
+      initialising project.
+  Working on 'web-client' in 'dev'
+    Doing action 'init'
+      initialising project.
+      
+[andy@monkey system.d]$ bc-build status # note how only the web-client has changed state.
+Called with parameters: status
+'web-client' in 'stable' is in state: INITIALISED
+'node-server' in 'stable' is in state: NULL
+'web-client' in 'dev' is in state: INITIALISED
+'node-server' in 'dev' is in state: NULL
+'python-server' in 'dev' is in state: NULL
+
+[andy@monkey system.d]$ bc-build source dev # get source for all projects in dev release.
+Called with parameters: source dev
+  Working on 'web-client' in 'dev'
+    Doing action 'source'
+      Getting latest git
+      Got it
+  Working on 'node-server' in 'dev'
+    Doing action 'init'
+      initialising project.
+    Doing action 'source'
+      Getting latest git
+      Got it
+  Working on 'python-server' in 'dev'
+    Doing action 'init'
+      initialising project.
+    Doing action 'source'
+      Source up-to-date: skipping.
+      
+[andy@monkey system.d]$ bc-build status  # note that the python-server has stayed at 'INITIALISED'
+Called with parameters: status
+'web-client' in 'stable' is in state: INITIALISED
+'node-server' in 'stable' is in state: NULL
+'web-client' in 'dev' is in state: HAVE_SOURCE
+'node-server' in 'dev' is in state: HAVE_SOURCE
+'python-server' in 'dev' is in state: INITIALISED
+
+[andy@monkey system.d]$ bc-build init  # it checks that an action hasn't been done already.
+Called with parameters: init
+  Skipping 'web-client' in 'stable' - action 'init' run already.
+  Working on 'node-server' in 'stable'
+    Doing action 'init'
+      initialising project.
+  Skipping 'web-client' in 'dev' - action 'init' run already.
+  Skipping 'node-server' in 'dev' - action 'init' run already.
+  Skipping 'python-server' in 'dev' - action 'init' run already.
+
+[andy@monkey system.d]$ bc-build status
+Called with parameters: status
+'web-client' in 'stable' is in state: INITIALISED
+'node-server' in 'stable' is in state: INITIALISED
+'web-client' in 'dev' is in state: HAVE_SOURCE
+'node-server' in 'dev' is in state: HAVE_SOURCE
+'python-server' in 'dev' is in state: INITIALISED
+
+[andy@monkey system.d]$ bc-build complete dev  # take the dev release through all remaining steps.
+Called with parameters: complete dev
+  Working on 'web-client' in 'dev'
+    Doing action 'build'
+      Building project.
+    Doing action 'package'
+      packaging project.
+    Doing action 'archive'
+      archiving project.
+    Doing action 'complete'
+      completing project.
+  Working on 'node-server' in 'dev'
+    Doing action 'build'
+      Quite deliberate build error.
+  Working on 'python-server' in 'dev'
+    Doing action 'source'
+      Source up-to-date: skipping.
+      
+[andy@monkey system.d]$ bc-build status  # node-server has a build error so gets skipped from now on.
+                                         # the others have gone back round to 'INITIALISED'
+Called with parameters: status
+'web-client' in 'stable' is in state: INITIALISED
+'node-server' in 'stable' is in state: INITIALISED
+'web-client' in 'dev' is in state: INITIALISED
+'node-server' in 'dev' is in state: ERROR
+'python-server' in 'dev' is in state: INITIALISED
+
+[andy@monkey system.d]$ bc-build complete stable  # do the same for the stable release.
+Called with parameters: complete stable
+  Working on 'web-client' in 'stable'
+    Doing action 'source'
+      Sourcey
+    Doing action 'build'
+      building project.
+    Doing action 'package'
+      packaging project.
+    Doing action 'archive'
+      archiving project.
+    Doing action 'complete'
+      completing project.
+  Working on 'node-server' in 'stable'
+    Doing action 'source'
+      Sourcey
+    Doing action 'build'
+      building project.
+    Doing action 'package'
+      packaging project.
+    Doing action 'archive'
+      archiving project.
+    Doing action 'complete'
+      completing project.
+      
+[andy@monkey system.d]$ bc-build status  # again, the final step puts the state back to 'INITIALISED'
+Called with parameters: status
+'web-client' in 'stable' is in state: INITIALISED
+'node-server' in 'stable' is in state: INITIALISED
+'web-client' in 'dev' is in state: INITIALISED
+'node-server' in 'dev' is in state: ERROR
+'python-server' in 'dev' is in state: INITIALISED
+

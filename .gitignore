@@ -1,0 +1,3 @@
+# Files and dirs to ignore.
+*.log
+releases.d/
