@@ -143,8 +143,9 @@ if [[ `ls -F $0` =~ @$ ]]; then
     this=/${this##* /}
 fi
 SYSTEM_ROOT=${this%%/bc-build.sh}
+echo SYSTEM_ROOT=$SYSTEM_ROOT
 
-## Global variable default values
+# Global variable default values
 
 LOG_LEVEL=NICE # logging level
 LOG_FILE=$SYSTEM_ROOT/log.d/main.log # file to log to.

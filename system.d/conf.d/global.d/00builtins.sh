@@ -9,7 +9,7 @@
 # For build actions, the current directory is set to PROJECT_DIR
 # (build actions are all actions except list, status and reset).
 
-global doList doStatus doInit doBuild doPackage doArchive doComplete
+global doList doStatus doInit doSource doBuild doPackage doArchive doComplete
 
 doList() {
     printf "${indent}%-10s | Projects\n" Release
@@ -35,25 +35,35 @@ doInit() {
     # initialise source-y things.
     callIndirect initSource${SOURCE_TYPE^} # e.g. call initSourceGit if
         # SOURCE_TYPE='git'
-    setState $RELEASE $PROJECT INITIALISED
+    if [ $? -eq 0 ] ; then
+        setState $RELEASE $PROJECT INITIALISED
+    else
+        buildError "Error initialising project."
+        return 1
+    fi
+}
+
+doSource() {
+    logMessage NICE "getting source. (dummy action)."
+    setState $RELEASE $PROJECT HAVE_SOURCE
 }
 
 doBuild() {
-    logMessage NICE "building project."
+    logMessage NICE "building project. (dummy action)."
     setState $RELEASE $PROJECT BUILT
 }
 
 doPackage() {
-    logMessage NICE "packaging project."
+    logMessage NICE "packaging project. (dummy action)."
     setState $RELEASE $PROJECT PACKAGED
 }
 
 doArchive() {
-    logMessage NICE "archiving project."
+    logMessage NICE "archiving project. (dummy action)."
     setState $RELEASE $PROJECT ARCHIVED
 }
 
 doComplete() {
-    logMessage NICE "completing project."
+    logMessage NICE "completing project. (dummy action)."
     setState $RELEASE $PROJECT INITIALISED
 }
