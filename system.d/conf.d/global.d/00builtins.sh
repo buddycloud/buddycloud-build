@@ -33,13 +33,15 @@ doInit() {
     logMessage NICE "initialising project."
     mkdir build.d tmp.d # make build directories.
     # initialise source-y things.
-    callIndirect initSource${SOURCE_TYPE^} # e.g. call initSourceGit if
-        # SOURCE_TYPE='git'
-    if [ $? -eq 0 ] ; then
-        setState $RELEASE $PROJECT INITIALISED
-    else
-        buildError "Error initialising project."
-        return 1
+    if [ -n "$SOURCE_TYPE" ] ; then
+        callIndirect initSource${SOURCE_TYPE^} 
+            # e.g. call initSourceGit if SOURCE_TYPE='git'
+        if [ $? -eq 0 ] ; then
+            setState $RELEASE $PROJECT INITIALISED
+        else
+            buildError "Error initialising project."
+            return 1
+        fi
     fi
 }
 

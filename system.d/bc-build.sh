@@ -10,6 +10,7 @@
 
 # TODO:
 # - get the right messages sent to log and console. (e.g. when you do 'list').
+# - sort out a way to deal with build errors.
 
 ## Define functions
 
@@ -71,7 +72,6 @@ callIndirect() {
     return $retVal
 }
 
-
 logMessage() {
 # Write a message to the console and log file. --noConsole or --noLog can be
 # used to stop messages going to the console or log file separately.
@@ -117,7 +117,8 @@ buildError() {
 
 global() {
 # record function or variable name(s) in the list of global names, so
-# they can all be deleted later.
+# they can all be deleted later. (I.e. before re-running the action functions
+# when invoking with project|release='all' )
     while [ -n "$1" ] ; do
 	    if ! [[ " ${GLOBALS[*]} " =~ " $1 " ]] ; then
 	        # not already in there.
@@ -143,9 +144,8 @@ if [[ `ls -F $0` =~ @$ ]]; then
     this=/${this##* /}
 fi
 SYSTEM_ROOT=${this%%/bc-build.sh}
-echo SYSTEM_ROOT=$SYSTEM_ROOT
 
-# Global variable default values
+## Global variable default values
 
 LOG_LEVEL=NICE # logging level
 LOG_FILE=$SYSTEM_ROOT/log.d/main.log # file to log to.
@@ -205,7 +205,6 @@ done
 #echo action=$action release=$release project=$project
 
 # set blank parameters to '-'
-
 [ -z "$RELEASE" ] && RELEASE="-"
 [ -z "$PROJECT" ] && PROJECT="-"
 
