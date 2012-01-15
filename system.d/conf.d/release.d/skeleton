@@ -1,0 +1,15 @@
+# This is an example of a global configuration file.
+
+# first declare any global variables (which you want to be available to other
+# functions), like this:
+global testFunc TEST
+
+# then write the definitions of the variables and functions.
+TEST=testvalue
+
+testfunc() {
+    var='inside' # a local variable which doesn't need to be declared
+    echo $var the function.
+    TEST=newvalue
+}
+

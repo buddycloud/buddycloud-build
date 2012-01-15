@@ -1,0 +1,5 @@
+# This directory is for configuration files specific to a particular project.
+# The files are named like '<project-name>.sh'
+# Only the file relevant to the project being worked on at the moment is
+# called.
+# They are parsed last after the release and global configuration files.

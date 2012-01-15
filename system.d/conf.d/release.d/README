@@ -1,0 +1,5 @@
+# This directory is for configuration files specific to a particular release.
+# The files are named like '<release-name>.sh'
+# Only the file relevant to the release being worked on at the moment is
+# called.
+# They are parsed in between the global and project configuration files.

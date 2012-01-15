@@ -330,7 +330,7 @@ for curRelease in $releases; do
                     logMessage DEBUG "  $f"
                     . $SYSTEM_ROOT/conf.d/global.d/$f
                 fi
-            done < <(ls -1 $SYSTEM_ROOT/conf.d/global.d/)
+            done < <(ls -1 $SYSTEM_ROOT/conf.d/global.d/|grep '^[0-9][0-9].*\.sh')
             
             # Read action related config files.
             logMessage DEBUG "Reading action related config files."

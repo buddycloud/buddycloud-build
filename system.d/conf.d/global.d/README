@@ -1,0 +1,5 @@
+This is the directory for globally relevant configuration files.
+
+Files in this directory which match the regexp '^[0-9][0-9].*\.sh' are included in bc-build.sh every time an action is run.
+
+This directory is parsed before the release and project specific configuration files.
