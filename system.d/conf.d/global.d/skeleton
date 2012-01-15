@@ -1,6 +1,6 @@
 # This is an example of a global configuration file.
 
-# first declare any global variables (which you want to be available to other
+# first declare any global names (which you want to be available to other
 # functions), like this:
 global testFunc TEST
 
